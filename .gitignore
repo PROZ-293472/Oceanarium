@@ -1,2 +1,5 @@
 .idea
 out
+target
+pom.xml
+resources
