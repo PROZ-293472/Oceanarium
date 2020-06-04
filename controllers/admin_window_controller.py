@@ -1,10 +1,10 @@
-from views.main_window_ui import Ui_MainWindow
+from views.admin_window_ui import Ui_AdminWindow
 
 
-class MainWindowController:
+class AdminWindowController:
 
     def __init__(self, main_window):
-        self.ui = Ui_MainWindow()
+        self.ui = Ui_AdminWindow()
 
         self.ui.setupUi(main_window)
 
