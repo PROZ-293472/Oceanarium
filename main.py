@@ -6,7 +6,10 @@ import sys
 
 
 # default db config
+from entities.entities import Employee
+
 con = DBConnection()
+print(con.get_data('select * from Pracownicy'))
 
 app = QtWidgets.QApplication(sys.argv)
 main_window = QtWidgets.QMainWindow()
