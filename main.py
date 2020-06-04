@@ -1,11 +1,10 @@
-import sys
+from controllers.main_window_controller import MainWindowController
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
 
-from views.main_window_ui import Ui_MainWindow
 
 app = QtWidgets.QApplication(sys.argv)
-MainWindow = QtWidgets.QMainWindow()
-ui = Ui_MainWindow()
-ui.setupUi(MainWindow)
-MainWindow.show()
+main_window = QtWidgets.QMainWindow()
+c = MainWindowController(main_window=main_window)
+main_window.show()
 sys.exit(app.exec_())
