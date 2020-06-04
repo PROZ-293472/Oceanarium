@@ -5,7 +5,6 @@ class LoginPageController:
 
     def __init__(self, main_window):
         self.ui = Ui_LoginPage()
-
         self.ui.setupUi(main_window)
 
         # CONNECTING FUNCTIONS TO BUTTONS
@@ -18,4 +17,6 @@ class LoginPageController:
         return self.ui.lineEdit_password.text()
 
     def login(self):
-        print(self.get_username(), self.get_password())
+        username = self.get_username()
+        password = self.get_password()
+
