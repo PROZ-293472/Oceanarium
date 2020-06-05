@@ -47,3 +47,14 @@ class Aquarium:
         self.section_name = section_name
 
 
+class Position:
+
+    permissions = {1: "CASHIER", 2: "TRAINER", 3: "GUIDE", 4: "ADMIN"}
+
+    def __init__(self, id, name, description):
+        self.id = id
+        self.name = name
+        self.description = description
+
+
+
