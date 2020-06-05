@@ -18,9 +18,14 @@ class DBConnection:
     def __del__(self):
         self.con.close()
 
-    def get_data(self, query):
+    def send_request(self, query, params=None):
         cur = self.con.cursor()
-        cur.execute(query)
+        if not params:
+            cur.execute(query)
+        else:
+            cur.prepare(query)
+            cur.execute(None, params)
+
         response = []
 
         for r in cur:
@@ -28,5 +33,8 @@ class DBConnection:
         cur.close()
 
         return response
+
+
+
 
 
