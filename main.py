@@ -10,7 +10,7 @@ from entities.entities import Employee
 con = DBConnection()
 app= QtWidgets.QApplication(sys.argv)
 main_window = QtWidgets.QMainWindow()
-c = LoginPageController(main_window=main_window, db_connection=con)
+c = AdminWindowController(main_window=main_window, db_connection=con)
 
 sys.exit(app.exec_())
 
