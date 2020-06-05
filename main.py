@@ -4,16 +4,13 @@ from db.db_connection import DBConnection
 from PyQt5 import QtWidgets
 import sys
 
-
 # default db config
 from entities.entities import Employee
 
 con = DBConnection()
-
-app = QtWidgets.QApplication(sys.argv)
+app= QtWidgets.QApplication(sys.argv)
 main_window = QtWidgets.QMainWindow()
-
 c = LoginPageController(main_window=main_window, db_connection=con)
 
-main_window.show()
 sys.exit(app.exec_())
+
