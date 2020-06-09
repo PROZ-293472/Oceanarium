@@ -2,3 +2,5 @@ resources
 .idea
 *.pyc
 db/config.txt
+db/conf.txt
+venv
