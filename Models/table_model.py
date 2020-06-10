@@ -35,3 +35,6 @@ class TableModel(PyQt5.QtCore.QAbstractTableModel):
         for column_name in self.headers:
             if section == self.headers.index(column_name):
                 return PyQt5.QtCore.QVariant(column_name)
+
+
+

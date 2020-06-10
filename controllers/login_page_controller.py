@@ -12,11 +12,11 @@ import sys
 
 class LoginPageController(Controller):
 
-    def __init__(self, main_window, db_connection):
-        super(LoginPageController, self).__init__(main_window, db_connection)
+    def __init__(self, window, db_connection):
+        super(LoginPageController, self).__init__(window, db_connection)
 
         self.ui = Ui_LoginPage()
-        self.ui.setupUi(self.main_window)
+        self.ui.setupUi(self.window)
 
         # CONNECTING FUNCTIONS TO BUTTONS
         self.ui.pushButton_login.clicked.connect(self.login)
@@ -52,7 +52,7 @@ class LoginPageController(Controller):
 
             if Position.permissions[response[0][0]] == 'ADMIN':
                 print('ADMIN')
-                a = AdminWindowController(main_window=self.main_window, db_connection=self.db_connection)
+                a = AdminWindowController(window=self.window, db_connection=self.db_connection)
 
             elif Position.permissions[response[0][0]] == 'TRAINER':
                 print('TRAINER')

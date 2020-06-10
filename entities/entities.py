@@ -1,6 +1,11 @@
-class Oceanarium:
-    def __init__(self, id, name, establish_date, nip, owner_name, owner_last_name):
+class Entity:
+    def __init__(self, id):
         self.id = id
+
+
+class Oceanarium(Entity):
+    def __init__(self, id, name, establish_date, nip, owner_name, owner_last_name):
+        super(Oceanarium, self).__init__(id)
         self.name = name
         self.establish_date = establish_date
         self.nip = nip
@@ -8,9 +13,9 @@ class Oceanarium:
         self.owner_last_name = owner_last_name
 
 
-class Employee:
+class Employee(Entity):
     def __init__(self, id, first_name, last_name, pesel, birth_date, licence_num):
-        self.id = id
+        super(Employee, self).__init__(id)
         self.first_name = first_name
         self.last_name = last_name
         self.pesel = pesel
@@ -18,9 +23,9 @@ class Employee:
         self.licence_num = licence_num
 
 
-class Address:
+class Address(Entity):
     def __init__(self, id, city, postal_code, street, number, apartment_num):
-        self.id = id
+        super(Address, self).__init__(id)
         self.city = city
         self.postal_code = postal_code
         self.street = street
@@ -28,9 +33,9 @@ class Address:
         self.apartment_num = apartment_num
 
 
-class Animal:
+class Animal(Entity):
     def __init__(self, id, name, birth_date, sex, length, weight):
-        self.id = id
+        super(Animal, self).__init__(id)
         self.name = name
         self.birth_date = birth_date
         self.ex = sex
@@ -38,21 +43,21 @@ class Animal:
         self.weight = weight
 
 
-class Aquarium:
+class Aquarium(Entity):
     def __init__(self, id, name, volume, water_temp, section_name):
-        self.id = id
+        super(Aquarium, self).__init__(id)
         self.name = name
         self.volume = volume
         self.water_temp = water_temp
         self.section_name = section_name
 
 
-class Position:
+class Position(Entity):
 
     permissions = {1: "CASHIER", 2: "TRAINER", 3: "GUIDE", 4: "ADMIN"}
 
     def __init__(self, id, name, description):
-        self.id = id
+        super(Position, self).__init__(id)
         self.name = name
         self.description = description
 

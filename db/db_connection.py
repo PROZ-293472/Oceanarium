@@ -14,9 +14,7 @@ class DBConnection:
                 password = data['password']
                 name = data['name']
 
-
-        cred = f'{username}/{password}@{address}/{name}'
-        self.con = cx_Oracle.connect(cred)
+ cred = f'{username}/{password}@{address}/{name}'        self.con = cx_Oracle.connect(cred)
 
     def __del__(self):
         self.con.close()
