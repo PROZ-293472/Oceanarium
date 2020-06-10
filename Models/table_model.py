@@ -27,14 +27,22 @@ class TableModel(PyQt5.QtCore.QAbstractTableModel):
             return None
         if not 0 <= index.row() < len(self.rows):
             return None
-        for column_name in self.headers:
-            if index.column() == self.headers.index(column_name):
-                return self.rows[index.row()][index.column()]
+        if (role == PyQt5.QtCore.Qt.DisplayRole):
+            for column_name in self.headers:
+                if index.column() == self.headers.index(column_name):
+                    return self.rows[index.row()][index.column()]
 
-    def headerData(self, section: int, orientation: PyQt5.QtCore.Qt.Orientation, role=PyQt5.QtCore.Qt.DisplayRole) -> typing.Any:
-        for column_name in self.headers:
-            if section == self.headers.index(column_name):
-                return PyQt5.QtCore.QVariant(column_name)
+    def headerData(self, section: int, orientation: PyQt5.QtCore.Qt.Orientation= PyQt5.QtCore.Qt.Horizontal, role= PyQt5.QtCore.Qt.DisplayRole) -> typing.Any:
+        if (role ==PyQt5.QtCore.Qt.DisplayRole and orientation == PyQt5.QtCore.Qt.Horizontal ) :
+             for column_name in self.headers:
+                if section == self.headers.index(column_name):
+                    return PyQt5.QtCore.QVariant(column_name)
+
+    def deleteData(self,row_index = -1):
+        if row_index < 0 or row_index > self.rowCount() :
+            return -1
+        else :
+            self.rows.remove(self.rows[row_index])
 
 
 

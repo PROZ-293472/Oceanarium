@@ -13,8 +13,9 @@ class DBConnection:
                 username = data['username']
                 password = data['password']
                 name = data['name']
+        cred = f'{username}/{password}@{address}/{name}'
+        self.con = cx_Oracle.connect(cred)
 
- cred = f'{username}/{password}@{address}/{name}'        self.con = cx_Oracle.connect(cred)
 
     def __del__(self):
         self.con.close()
@@ -35,6 +36,11 @@ class DBConnection:
         cur.close()
 
         return response
+    
+    def delete_row(self,query):
+        cur = self.con.cursor()
+        cur.execute(query)
+        self.con.commit()
 
 
 

@@ -7,5 +7,6 @@ class AdminWindowModel :
         self.table_model = table_model
         self.db_connection = db_connection
 
-    def delete_row(self):
-        to_delete = self.table_model.
+    def delete_row(self, to_delete_id = -1):
+        self.table_model
+

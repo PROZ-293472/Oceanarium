@@ -1,8 +1,11 @@
-from Models.selection_model import SelectionModel
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QHeaderView
+
 from Models.table_model import TableModel
 from controllers.controller import Controller
 from controllers.dialog_employee_controller import DialogEmployeeController
 from db.queries import Queries
+from db.string_constants import ColumnNames
 from views.admin_window_ui import Ui_AdminWindow
 from PyQt5 import QtWidgets
 import Models
@@ -15,16 +18,17 @@ class AdminWindowController(Controller):
         self.ui = Ui_AdminWindow()
         self.ui.setupUi(self.window)
 
+
         #headers = ['ID', 'Imie', 'Nazwisko']
         #rows = [(1, 'Adam', 'Rozbicki'), (2, 'Ele', 'Mele')]
         self.table_model = TableModel()
-        self.selection_model = SelectionModel(self.table_model)
 
         self.current_table = 'Pracownicy'
         self.current_id = None
 
-        self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko'], 'id_pracownika')
-        self.ui.tableView.setModel(self.tablemodel)
+        self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko,pesel,data_urodzenia'], 'id_pracownika')
+        self.ui.tableView.setHorizontalHeader(QHeaderView(Qt.Horizontal,self.ui.tableView))
+        self.ui.tableView.setModel(self.table_model)
 
         # INITIAL STATE OF BUTTONS
         self.ui.pushButton_delete.setDisabled(True)
@@ -44,9 +48,9 @@ class AdminWindowController(Controller):
         query = query.translate({ord(i): None for i in "[]'"})
         response = self.db_connection.send_request(query=query)
         print(response)
-        self.tablemodel.rows = response
-        col_names = cols[0].split(',')
-        self.tablemodel.headers = col_names
+        self.table_model.rows = response
+        col_names = ColumnNames().get_column_headers(table,cols)
+        self.table_model.headers = col_names
 
     def add(self):
         dialog = QtWidgets.QDialog()
@@ -54,6 +58,13 @@ class AdminWindowController(Controller):
 
     def delete(self):
         print("DELETE")
+        if self.current_id > 0 :
+            query = Queries.query_delete_row.format(table= self.current_table, id_name = ColumnNames().pracownicy_db[0], id = self.current_id )
+            self.db_connection.delete_row(query=query)
+            self.table_model.deleteData(self.current_row)
+            self.ui.tableView.setModel(self.table_model)
+            self.ui.tableView.show()
+
 
     def table_clicked(self, item):
         if not item:
@@ -65,6 +76,7 @@ class AdminWindowController(Controller):
         self.ui.pushButton_delete.setEnabled(True)
 
         row = item.row()
+        self.current_row = row
         id_index = self.ui.tableView.model().index(row, 0)
         self.current_id = self.ui.tableView.model().data(id_index)
 
