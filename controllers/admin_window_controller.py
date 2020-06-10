@@ -18,9 +18,6 @@ class AdminWindowController(Controller):
         self.ui = Ui_AdminWindow()
         self.ui.setupUi(self.window)
 
-
-        #headers = ['ID', 'Imie', 'Nazwisko']
-        #rows = [(1, 'Adam', 'Rozbicki'), (2, 'Ele', 'Mele')]
         self.table_model = TableModel()
 
         self.current_table = 'Pracownicy'
@@ -33,11 +30,13 @@ class AdminWindowController(Controller):
         # INITIAL STATE OF BUTTONS
         self.ui.pushButton_delete.setDisabled(True)
         self.ui.pushButton_edit.setDisabled(True)
+        self.edit_Enabled = False
 
         # CONNECTING FUNCTIONS TO BUTTONS
         self.ui.pushButton_add.clicked.connect(self.add)
         self.ui.pushButton_delete.clicked.connect(self.delete)
         self.ui.tableView.clicked.connect(self.table_clicked)
+        self.ui.pushButton_edit.clicked.connect(self.edit_clicked)
         #self.ui.tableView.currentChanged.connect(self.table_clicked)
 
        # self.ui.tableView.resizeColumnsToContents()
@@ -60,10 +59,9 @@ class AdminWindowController(Controller):
         print("DELETE")
         if self.current_id > 0 :
             query = Queries.query_delete_row.format(table= self.current_table, id_name = ColumnNames().pracownicy_db[0], id = self.current_id )
-            self.db_connection.delete_row(query=query)
+            self.db_connection.query_delete(query=query)
             self.table_model.deleteData(self.current_row)
-            self.ui.tableView.setModel(self.table_model)
-            self.ui.tableView.show()
+            self.refresh_table()
 
 
     def table_clicked(self, item):
@@ -80,6 +78,15 @@ class AdminWindowController(Controller):
         id_index = self.ui.tableView.model().index(row, 0)
         self.current_id = self.ui.tableView.model().data(id_index)
 
+    def refresh_table(self):
+        self.ui.tableView.setModel(self.table_model)
+        self.ui.tableView.viewport().update()
+
+    def edit_clicked(self):
+        self.table_model.edit_enabled = True
+
+    def save_clicked(self):
+        self.db_connection.commit()
 
 
 

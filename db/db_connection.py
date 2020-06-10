@@ -37,10 +37,13 @@ class DBConnection:
 
         return response
     
-    def delete_row(self,query):
+    def query_delete(self,query):
         cur = self.con.cursor()
         cur.execute(query)
+
+    def commit(self):
         self.con.commit()
+
 
 
 
