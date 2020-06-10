@@ -6,7 +6,7 @@ import cx_Oracle
 
 class DBConnection:
 
-    def __init__(self, username=None, password=None, address='127.0.0.1'):
+    def __init__(self, username=None, password=None, address='127.0.0.1', name=None):
         if not username or not password:
             with open('db/config.txt') as json_file:
                 data = json.load(json_file)
