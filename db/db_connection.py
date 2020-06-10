@@ -11,8 +11,9 @@ class DBConnection:
                 data = json.load(json_file)
                 username = data['username']
                 password = data['password']
+                name = data['name']
 
-        cred = f'{username}/{password}@{address}/ORCL1'
+        cred = f'{username}/{password}@{address}/{name}'
         self.con = cx_Oracle.connect(cred)
 
     def __del__(self):
