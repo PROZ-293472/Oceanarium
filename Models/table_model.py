@@ -14,6 +14,7 @@ class TableModel(PyQt5.QtCore.QAbstractTableModel):
     def setHeaderData(self, section: int, orientation: PyQt5.QtCore.Qt.Orientation, value: typing.Any,
                       role: int = ...) -> bool:
         self.headers[section] = value
+        return True
 
     def rowCount(self, parent: PyQt5.QtCore.QModelIndex = ...) -> int:
         return len(self.rows)

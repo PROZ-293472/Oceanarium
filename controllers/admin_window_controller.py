@@ -1,3 +1,4 @@
+from Models.selection_model import SelectionModel
 from Models.table_model import TableModel
 from controllers.controller import Controller
 from db.queries import Queries
@@ -14,15 +15,16 @@ class AdminWindowController(Controller):
         self.ui.setupUi(self.main_window)
         #headers = ['ID', 'Imie', 'Nazwisko']
         #rows = [(1, 'Adam', 'Rozbicki'), (2, 'Ele', 'Mele')]
-        self.tablemodel = TableModel()
-
+        self.table_model = TableModel()
+        self.selection_model = SelectionModel(self.table_model)
 
         # CONNECTING FUNCTIONS TO BUTTONS
         self.ui.pushButton_add.clicked.connect(self.add)
         self.ui.pushButton_delete.clicked.connect(self.delete)
 
-        self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko'], 'id_pracownika')
-        self.ui.tableView.setModel(self.tablemodel)
+        self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko,id_stanowisko,id_oceanarium,id_adresu'], 'id_pracownika')
+        self.ui.tableView.setModel(self.table_model)
+        self.ui.tableView.setSelectionModel(self.selection_model)
        # self.ui.tableView.resizeColumnsToContents()
         self.run()
 
