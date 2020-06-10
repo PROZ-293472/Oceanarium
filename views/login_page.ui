@@ -34,26 +34,26 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="Username_label">
     <property name="geometry">
      <rect>
       <x>100</x>
       <y>110</y>
-      <width>35</width>
-      <height>10</height>
+      <width>81</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Username</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="Password_label">
     <property name="geometry">
      <rect>
       <x>100</x>
       <y>170</y>
-      <width>35</width>
-      <height>10</height>
+      <width>71</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
@@ -76,10 +76,10 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>40</y>
-      <width>181</width>
-      <height>31</height>
+      <x>130</x>
+      <y>30</y>
+      <width>321</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -101,7 +101,7 @@
      <x>0</x>
      <y>0</y>
      <width>563</width>
-     <height>18</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

@@ -1,6 +1,7 @@
 import json
 import cx_Oracle
 
+
 # requires config.txt file in db folder
 
 class DBConnection:
@@ -13,6 +14,7 @@ class DBConnection:
                 password = data['password']
                 name = data['name']
 
+
         cred = f'{username}/{password}@{address}/{name}'
         self.con = cx_Oracle.connect(cred)
 
@@ -21,6 +23,7 @@ class DBConnection:
 
     def send_request(self, query, params=None):
         cur = self.con.cursor()
+
         if not params:
             cur.execute(query)
         else:
