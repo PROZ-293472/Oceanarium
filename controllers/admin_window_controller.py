@@ -1,8 +1,10 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHeaderView
 
+from Models.main_model import MainWindowModel
 from Models.table_model import TableModel
 from controllers.controller import Controller
+from controllers.dialog_add_controller import DialogAddController
 from controllers.dialog_employee_controller import DialogEmployeeController
 from db.queries import Queries
 from db.string_constants import ColumnNames
@@ -17,20 +19,18 @@ class AdminWindowController(Controller):
 
         self.ui = Ui_AdminWindow()
         self.ui.setupUi(self.window)
-
-        self.table_model = TableModel()
-
+        self.main_model = MainWindowModel(db_connection,'Pracownicy')
         self.current_table = 'Pracownicy'
         self.current_id = None
-
-        self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko,pesel,data_urodzenia'], 'id_pracownika')
+        self.table_model = TableModel(self.main_model)
+        self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko,pesel,id_stanowisko'], 'id_pracownika')
         self.ui.tableView.setHorizontalHeader(QHeaderView(Qt.Horizontal,self.ui.tableView))
         self.ui.tableView.setModel(self.table_model)
 
         # INITIAL STATE OF BUTTONS
         self.ui.pushButton_delete.setDisabled(True)
         self.ui.pushButton_edit.setDisabled(True)
-        self.edit_Enabled = False
+        self.edit_enabled = False
 
         # CONNECTING FUNCTIONS TO BUTTONS
         self.ui.pushButton_add.clicked.connect(self.add)
@@ -53,7 +53,7 @@ class AdminWindowController(Controller):
 
     def add(self):
         dialog = QtWidgets.QDialog()
-        d = DialogEmployeeController(dialog, self.db_connection, 'ADD')
+        d = DialogAddController(dialog, 'Pracownicy', self.main_model)
 
     def delete(self):
         print("DELETE")

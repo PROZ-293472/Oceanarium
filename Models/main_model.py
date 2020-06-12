@@ -1,13 +1,14 @@
-from Models.table_model import TableModel
+#from Models.table_model import TableModel
 from db.queries import Queries
 from db.string_constants import ColumnNames
 
 
 class MainWindowModel:
 
-    def __init__(self, table_model=TableModel(), db_connection=None, ):
-        self.table_model = table_model
+    def __init__(self, db_connection=None,current_table = None ):
+        #self.table_model = table_model
         self.db_connection = db_connection
+        self.current_table = current_table
 
     def get_table_content(self, table=None, columns=None, order_param=None):
         query = Queries.query_get_list.format(table=table, cols=columns, param=order_param)
@@ -25,7 +26,7 @@ class MainWindowModel:
         self.db_connection.query_delete(query=query)
         self.table_model.deleteData(self.row_index)
 
-    def edit_value(self, row, column_name, to_edit_id, new_value):
+    def edit_value(self, column_name, to_edit_id, new_value):
         query = Queries.query_edit_value.format(table=self.current_table,
                                                 column_name=ColumnNames().pracownicy_db[ColumnNames()
                                                 .pracownicy_display.index(column_name)],
@@ -33,3 +34,10 @@ class MainWindowModel:
                                                 id_name = ColumnNames().pracownicy_db[0],
                                                 id = to_edit_id
                                                 )
+        self.db_connection.query_delete(query)
+        self.db_connection.commit()
+
+    def add_row(self, table, values):
+        query = Queries.query_add_row.format(table=self.current_table, values = values)
+        self.db_connection.query_delete(query)
+        self.db_connection.commit()
