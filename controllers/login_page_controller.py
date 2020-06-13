@@ -4,16 +4,17 @@ from controllers.controller import Controller
 from db.queries import Queries
 from entities.entities import Position
 import hashlib
-from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import pyqtSignal
 
 
 class LoginPageController(Controller):
 
-    switch_admin = QtCore.pyqtSignal()
+    switch_admin = pyqtSignal()
 
-    def __init__(self, ui, db_connection):
+    def __init__(self, ui, db_connection, parent_controller):
         super(LoginPageController, self).__init__(ui=ui, db_connection=db_connection)
 
+        self.parent_controller = parent_controller
         # CONNECTING FUNCTIONS TO BUTTONS
         self.ui.pushButton_login.clicked.connect(self.login)
 
@@ -46,7 +47,7 @@ class LoginPageController(Controller):
 
             if Position.permissions[response[0][0]] == 'ADMIN':
                 print('ADMIN')
-                LoginPageController.switch_admin.emit()
+                self.parent_controller.open_admin()
 
             elif Position.permissions[response[0][0]] == 'TRAINER':
                 print('TRAINER')

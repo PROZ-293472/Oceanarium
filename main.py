@@ -4,8 +4,6 @@ from PyQt5 import QtWidgets
 import sys
 
 
-
-
 con = DBConnection()
 app = QtWidgets.QApplication(sys.argv)
 
