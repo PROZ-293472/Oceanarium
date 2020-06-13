@@ -51,6 +51,7 @@ class LoginPageController(Controller):
 
             elif Position.permissions[response[0][0]] == 'TRAINER':
                 print('TRAINER')
+                self.parent_controller.open_trainer()
             else:
                 print('ELSE')
 
