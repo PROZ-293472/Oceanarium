@@ -41,14 +41,6 @@ class Ui_LoginPage(object):
         font.setWeight(75)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 563, 26))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -59,7 +51,7 @@ class Ui_LoginPage(object):
         self.Username_label.setText(_translate("MainWindow", "Username"))
         self.Password_label.setText(_translate("MainWindow", "Password"))
         self.pushButton_login.setText(_translate("MainWindow", "Log in"))
-        self.label_3.setText(_translate("MainWindow", "Twoja Stara s.a"))
+        self.label_3.setText(_translate("MainWindow", "Oceanarium"))
 
 
 if __name__ == "__main__":
