@@ -30,12 +30,15 @@ class AdminWindowController(Controller):
         self.create_list('Pracownicy', ['*'],
                          'id_pracownika')
         self.ui.tableView.setHorizontalHeader(QHeaderView(Qt.Horizontal,self.ui.tableView))
+        self.ui.tableView.horizontalHeader().setStretchLastSection(True)
         self.ui.tableView.setModel(self.table_model)
 
         # INITIAL STATE OF BUTTONS
         self.ui.pushButton_delete.setDisabled(True)
         self.ui.pushButton_edit.setDisabled(True)
-        self.edit_enabled = False
+        self.edit_enabled = True
+       # self.ui.tableView.resizeColumnsToContents()
+        self.ui.tableView.horizontalHeader().setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
 
 
         # CONNECTING FUNCTIONS TO BUTTONS
@@ -74,7 +77,7 @@ class AdminWindowController(Controller):
         print("DELETE")
 
         if self.current_id > 0:
-            query = Queries.query_delete_row.format(table= self.current_table, id_name = ColumnNames().pracownicy_db[0], id = self.current_id )
+            query = Queries.query_delete_row.format(table= self.current_table, id_name = ColumnNames().get_id_name(self.current_table), id = self.current_id )
             self.db_connection.query_delete(query=query)
             self.table_model.deleteData(self.current_row)
             self.refresh_table()
@@ -97,6 +100,7 @@ class AdminWindowController(Controller):
     def refresh_table(self):
         self.ui.tableView.setModel(self.table_model)
         self.ui.tableView.viewport().update()
+        print(self.ui.tableView.wordWrap())
 
     def edit_clicked(self):
         self.table_model.edit_enabled = True

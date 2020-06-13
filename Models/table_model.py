@@ -12,7 +12,7 @@ class TableModel(PyQt5.QtCore.QAbstractTableModel):
         super(TableModel, self).__init__()
         self.rows = rows
         self.headers = headers
-        self.edit_enabled = False
+        self.edit_enabled = True
         self.parent_model = parent_model
         self.header_orientation = PyQt5.QtCore.Qt.Horizontal
 

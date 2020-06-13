@@ -3,6 +3,8 @@ import cx_Oracle
 
 
 # requires config.txt file in db folder
+from PyQt5 import QtWidgets
+
 
 class DBConnection:
 
@@ -39,7 +41,14 @@ class DBConnection:
     
     def query_delete(self,query):
         cur = self.con.cursor()
-        cur.execute(query)
+        try :
+            cur.execute(query)
+        except cx_Oracle.IntegrityError:
+            message_box = QtWidgets.QMessageBox()
+            message_box.setWindowTitle('Błąd')
+            message_box.setText("Zajęte ID.")
+            message_box.exec()
+
 
     def commit(self):
         self.con.commit()
