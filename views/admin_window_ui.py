@@ -60,13 +60,14 @@ class Ui_AdminWindow(object):
         self.tableView.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
         self.tableView.setGridStyle(QtCore.Qt.SolidLine)
         self.tableView.setSortingEnabled(True)
-        self.tableView.setWordWrap(False)
+        self.tableView.setWordWrap(True)
         self.tableView.setCornerButtonEnabled(False)
         self.tableView.setObjectName("tableView")
         self.tableView.horizontalHeader().setCascadingSectionResizes(True)
         self.tableView.horizontalHeader().setDefaultSectionSize(136)
         self.tableView.horizontalHeader().setSortIndicatorShown(True)
         self.tableView.horizontalHeader().setStretchLastSection(True)
+        self.tableView.resizeColumnsToContents()
         self.saveButton = QtWidgets.QPushButton(self.centralwidget)
         self.saveButton.setGeometry(QtCore.QRect(840, 10, 131, 41))
         self.saveButton.setAutoFillBackground(True)
@@ -87,7 +88,6 @@ class Ui_AdminWindow(object):
         self.actionLog_In.setObjectName("actionLog_In")
         self.menuMenu.addAction(self.actionLog_In)
         self.menubar.addAction(self.menuMenu.menuAction())
-
         self.retranslateUi(AdminWindow)
         QtCore.QMetaObject.connectSlotsByName(AdminWindow)
 

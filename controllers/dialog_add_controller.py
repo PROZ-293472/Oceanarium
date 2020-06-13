@@ -18,9 +18,11 @@ class DialogAddController(Controller):
         self.ui = Ui_AddDialog()
         self.ui.setupUi(window)
         self.table_model = TableModel(window_model)
-        self.table_model.headers = ColumnNames().pracownicy_display
-        self.table_model.headers.append('Hasło')
-        self.table_model.rows = [' '] * len(self.table_model.headers)
+        self.table_model.setHeaders(ColumnNames().get_column_headers(table, ['*']))
+        # self.table_model.headers = ColumnNames().pracownicy_display
+        if table == 'Pracownicy':
+            self.table_model.headers.append('Hasło')
+        self.table_model.rows = [''] * len(self.table_model.headers)
         self.table_model.edit_enabled = True
         self.table_model.header_orientation = PyQt5.QtCore.Qt.Vertical
         self.ui.tableView.setModel(self.table_model)
@@ -41,7 +43,6 @@ class DialogAddController(Controller):
             else:
                 values = values + str(v)
         self.window_model.add_row(self.table, values[0:len(values)-2])
-
     def reject(self):
         self.window.close()
 

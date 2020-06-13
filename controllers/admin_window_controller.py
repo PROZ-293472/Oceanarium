@@ -23,7 +23,9 @@ class AdminWindowController(Controller):
         self.current_table = 'Pracownicy'
         self.current_id = None
         self.table_model = TableModel(self.main_model)
-        self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko,pesel,id_stanowisko'], 'id_pracownika')
+       # self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko,pesel,id_stanowisko,data_urodzenia'], 'id_pracownika')
+        self.create_list('Pracownicy', ['*'],
+                         'id_pracownika')
         self.ui.tableView.setHorizontalHeader(QHeaderView(Qt.Horizontal,self.ui.tableView))
         self.ui.tableView.setModel(self.table_model)
 
@@ -32,6 +34,7 @@ class AdminWindowController(Controller):
         self.ui.pushButton_edit.setDisabled(True)
         self.edit_enabled = False
 
+
         # CONNECTING FUNCTIONS TO BUTTONS
         self.ui.pushButton_add.clicked.connect(self.add)
         self.ui.pushButton_delete.clicked.connect(self.delete)
@@ -39,6 +42,13 @@ class AdminWindowController(Controller):
         self.ui.pushButton_edit.clicked.connect(self.edit_clicked)
         #self.ui.tableView.currentChanged.connect(self.table_clicked)
 
+        #Table choice combo box
+        self.ui.comboBox_tables.addItems(self.main_model.tables)
+        self.ui.comboBox_tables.currentIndexChanged.connect(self.table_selection_change)
+
+        #SORT BY COMBO BOX
+        self.ui.comboBox_sortBy.addItems(self.table_model.headers)
+        self.ui.comboBox_sortBy.currentIndexChanged.connect(self.sort_selection_change)
        # self.ui.tableView.resizeColumnsToContents()
         self.run()
 
@@ -47,13 +57,15 @@ class AdminWindowController(Controller):
         query = query.translate({ord(i): None for i in "[]'"})
         response = self.db_connection.send_request(query=query)
         print(response)
+        col_names = ColumnNames().get_column_headers(table, cols)
+        self.table_model.setHeaders(col_names)
         self.table_model.rows = response
-        col_names = ColumnNames().get_column_headers(table,cols)
-        self.table_model.headers = col_names
+        self.refresh_table()
 
     def add(self):
         dialog = QtWidgets.QDialog()
-        d = DialogAddController(dialog, 'Pracownicy', self.main_model)
+        d = DialogAddController(dialog, self.current_table, self.main_model)
+        self.create_list(self.current_table,['*'],ColumnNames().get_id_name(self.current_table))
 
     def delete(self):
         print("DELETE")
@@ -88,6 +100,17 @@ class AdminWindowController(Controller):
     def save_clicked(self):
         self.db_connection.commit()
 
+    def table_selection_change(self,i):
+        self.current_table = self.main_model.tables[i]
+        self.main_model.current_table = self.main_model.tables[i]
+        self.table_model.rows = []
+        self.create_list(self.current_table, ['*'], ColumnNames().get_id_name(self.current_table))
+        self.refresh_sort_selection()
+        self.refresh_table()
 
+    def refresh_sort_selection(self):
+        self.ui.comboBox_sortBy.clear()
+        self.ui.comboBox_sortBy.addItems(self.table_model.headers)
 
-
+    def sort_selection_change(self, i):
+        self.create_list(self.current_table, ['*'], ColumnNames().get_db_column_name(self.current_table,self.table_model.headers[i]))

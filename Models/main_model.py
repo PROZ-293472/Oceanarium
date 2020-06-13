@@ -9,6 +9,7 @@ class MainWindowModel:
         #self.table_model = table_model
         self.db_connection = db_connection
         self.current_table = current_table
+        self.tables = list(['Pracownicy','Akwaria','Zwierzeta'])
 
     def get_table_content(self, table=None, columns=None, order_param=None):
         query = Queries.query_get_list.format(table=table, cols=columns, param=order_param)
@@ -28,10 +29,10 @@ class MainWindowModel:
 
     def edit_value(self, column_name, to_edit_id, new_value):
         query = Queries.query_edit_value.format(table=self.current_table,
-                                                column_name=ColumnNames().pracownicy_db[ColumnNames()
-                                                .pracownicy_display.index(column_name)],
+                                                column_name=ColumnNames().get_db_column_name(self.current_table,column_name),
+
                                                 new_value = new_value,
-                                                id_name = ColumnNames().pracownicy_db[0],
+                                                id_name = ColumnNames().get_id_name(self.current_table),
                                                 id = to_edit_id
                                                 )
         self.db_connection.query_delete(query)
