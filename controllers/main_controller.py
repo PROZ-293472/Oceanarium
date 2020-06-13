@@ -1,5 +1,3 @@
-from PyQt5 import QtCore
-
 from controllers.admin_window_controller import AdminWindowController
 from controllers.controller import Controller
 from controllers.login_page_controller import LoginPageController
@@ -21,5 +19,6 @@ class MainController(Controller):
     def open_admin(self):
         self.ui.QtStack.setCurrentIndex(1)
 
-    def open_trainer(self):
+    def open_trainer(self, user_id):
+        self.trainer.setup_controller(user_id)
         self.ui.QtStack.setCurrentIndex(2)

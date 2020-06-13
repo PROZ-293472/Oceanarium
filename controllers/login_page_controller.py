@@ -1,15 +1,12 @@
 from tkinter import messagebox
-
 from controllers.controller import Controller
 from db.queries import Queries
 from entities.entities import Position
 import hashlib
-from PyQt5.QtCore import pyqtSignal
+
 
 
 class LoginPageController(Controller):
-
-    switch_admin = pyqtSignal()
 
     def __init__(self, ui, db_connection, parent_controller):
         super(LoginPageController, self).__init__(ui=ui, db_connection=db_connection)
@@ -51,7 +48,7 @@ class LoginPageController(Controller):
 
             elif Position.permissions[response[0][0]] == 'TRAINER':
                 print('TRAINER')
-                self.parent_controller.open_trainer()
+                self.parent_controller.open_trainer(user_id=username)
             else:
                 print('ELSE')
 
