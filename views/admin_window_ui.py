@@ -71,22 +71,7 @@ class Ui_AdminWindow(object):
         self.saveButton.setGeometry(QtCore.QRect(840, 10, 131, 41))
         self.saveButton.setAutoFillBackground(True)
         self.saveButton.setObjectName("saveButton")
-        AdminWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(AdminWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1004, 26))
-        self.menubar.setObjectName("menubar")
-        self.menuMenu = QtWidgets.QMenu(self.menubar)
-        self.menuMenu.setObjectName("menuMenu")
-        AdminWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(AdminWindow)
-        self.statusbar.setObjectName("statusbar")
-        AdminWindow.setStatusBar(self.statusbar)
-        self.actionPOOPA = QtWidgets.QAction(AdminWindow)
-        self.actionPOOPA.setObjectName("actionPOOPA")
-        self.actionLog_In = QtWidgets.QAction(AdminWindow)
-        self.actionLog_In.setObjectName("actionLog_In")
-        self.menuMenu.addAction(self.actionLog_In)
-        self.menubar.addAction(self.menuMenu.menuAction())
+
 
         self.retranslateUi(AdminWindow)
         QtCore.QMetaObject.connectSlotsByName(AdminWindow)
@@ -101,9 +86,7 @@ class Ui_AdminWindow(object):
         self.label_sort1.setText(_translate("AdminWindow", "Sort by"))
         self.label_sort2.setText(_translate("AdminWindow", "Sort settings:"))
         self.saveButton.setText(_translate("AdminWindow", "SAVE CHANGES"))
-        self.menuMenu.setTitle(_translate("AdminWindow", "Menu"))
-        self.actionPOOPA.setText(_translate("AdminWindow", "POOPA"))
-        self.actionLog_In.setText(_translate("AdminWindow", "Log In"))
+
 
 
 if __name__ == "__main__":

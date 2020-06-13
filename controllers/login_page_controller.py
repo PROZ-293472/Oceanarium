@@ -1,27 +1,21 @@
 from tkinter import messagebox
 
-from controllers.admin_window_controller import AdminWindowController
 from controllers.controller import Controller
 from db.queries import Queries
 from entities.entities import Position
-from views.login_page_ui import Ui_LoginPage
 import hashlib
 from PyQt5 import QtCore, QtWidgets
-import sys
 
 
 class LoginPageController(Controller):
 
-    def __init__(self, window, db_connection):
-        super(LoginPageController, self).__init__(window, db_connection)
+    switch_admin = QtCore.pyqtSignal()
 
-        self.ui = Ui_LoginPage()
-        self.ui.setupUi(self.window)
+    def __init__(self, ui, db_connection):
+        super(LoginPageController, self).__init__(ui=ui, db_connection=db_connection)
 
         # CONNECTING FUNCTIONS TO BUTTONS
         self.ui.pushButton_login.clicked.connect(self.login)
-
-        self.run()
 
     def get_username(self):
         username = self.ui.lineEdit_username.text()
@@ -52,7 +46,7 @@ class LoginPageController(Controller):
 
             if Position.permissions[response[0][0]] == 'ADMIN':
                 print('ADMIN')
-                a = AdminWindowController(window=self.window, db_connection=self.db_connection)
+                LoginPageController.switch_admin.emit()
 
             elif Position.permissions[response[0][0]] == 'TRAINER':
                 print('TRAINER')

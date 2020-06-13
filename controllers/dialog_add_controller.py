@@ -11,7 +11,7 @@ from views.add_dialog_ui import Ui_AddDialog
 
 class DialogAddController(Controller):
 
-    def __init__(self, window = None, table = None, window_model = None):
+    def __init__(self, window=None, table=None, window_model=None):
         self.window = window
         self.table = table
         self.window_model = window_model
@@ -23,20 +23,22 @@ class DialogAddController(Controller):
         self.table_model.rows = [' '] * len(self.table_model.headers)
         self.table_model.edit_enabled = True
         self.table_model.header_orientation = PyQt5.QtCore.Qt.Vertical
+
         self.ui.tableView.setModel(self.table_model)
         self.ui.buttonBox.accepted.connect(self.submit)
         #self.ui.buttonBox.rejected.connect(self.reject)
+
         self.window.exec()
 
     def submit(self):
         values = ''
-        for v in self.table_model.rows :
+        for v in self.table_model.rows:
             if type(v) is str:
                 if v == ' ':
                     return False
                 if v.isnumeric() and len(v) < 10:
                     values = values + str(v) + ', '
-                else :
+                else:
                     values = values + '\'' + v + '\', '
             else:
                 values = values + str(v)

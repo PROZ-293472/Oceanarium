@@ -1,3 +1,5 @@
+import sys
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QHeaderView
 
@@ -12,13 +14,12 @@ from views.admin_window_ui import Ui_AdminWindow
 from PyQt5 import QtWidgets
 import Models
 
+
 class AdminWindowController(Controller):
 
-    def __init__(self, window, db_connection):
-        super(AdminWindowController, self).__init__(window, db_connection)
+    def __init__(self, ui, db_connection):
+        super(AdminWindowController, self).__init__(db_connection=db_connection, ui=ui)
 
-        self.ui = Ui_AdminWindow()
-        self.ui.setupUi(self.window)
         self.main_model = MainWindowModel(db_connection,'Pracownicy')
         self.current_table = 'Pracownicy'
         self.current_id = None
@@ -37,10 +38,7 @@ class AdminWindowController(Controller):
         self.ui.pushButton_delete.clicked.connect(self.delete)
         self.ui.tableView.clicked.connect(self.table_clicked)
         self.ui.pushButton_edit.clicked.connect(self.edit_clicked)
-        #self.ui.tableView.currentChanged.connect(self.table_clicked)
 
-       # self.ui.tableView.resizeColumnsToContents()
-        self.run()
 
     def create_list(self, table, cols, order_param):
         query = Queries.query_get_list.format(table=table, cols=cols, param=order_param)
@@ -57,7 +55,7 @@ class AdminWindowController(Controller):
 
     def delete(self):
         print("DELETE")
-        if self.current_id > 0 :
+        if self.current_id > 0:
             query = Queries.query_delete_row.format(table= self.current_table, id_name = ColumnNames().pracownicy_db[0], id = self.current_id )
             self.db_connection.query_delete(query=query)
             self.table_model.deleteData(self.current_row)
