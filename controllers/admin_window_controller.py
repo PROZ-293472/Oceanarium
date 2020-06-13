@@ -53,7 +53,6 @@ class AdminWindowController(Controller):
         self.ui.comboBox_sortBy.addItems(self.table_model.headers)
         self.ui.comboBox_sortBy.currentIndexChanged.connect(self.sort_selection_change)
        # self.ui.tableView.resizeColumnsToContents()
-        self.run()
 
     def create_list(self, table, cols, order_param):
         query = Queries.query_get_list.format(table=table, cols=cols, param=order_param)
