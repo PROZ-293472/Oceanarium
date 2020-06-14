@@ -14,7 +14,7 @@ class ColumnNames():
                                         'ID oceanarium', 'ID adresu', 'ID stanowiska'])
         self.pracownicy_password = 'haslo'
         self.pracownicy_data_types = list(['int', 'varchar20', 'varchar30', 'char11', 'date', 'varchar30',
-                                           'int', 'int', 'int'])
+                                           'int', 'int', 'int','char64'])
         self.pracownicy_optional = list([False, False, False, True, False, True, False, False, False])
 
         self.akwaria_db = list(['id_akwarium', 'nazwa_akwarium', 'objectosc', 'temperatura_wody',
@@ -22,7 +22,7 @@ class ColumnNames():
         self.akwaria_display = list(['ID', 'Nazwa akwarium', f'Objętość (m\N{SUPERSCRIPT THREE})',
                                      f'Temperatura \n wody (\N{DEGREE SIGN}C)',
                                      'ID oceanarium', 'Nazwa sekcji'])
-        self.akwaria_data_types = list(['int', 'varchar20', 'float', 'float', 'int', 'varchar20'])
+        self.akwaria_data_types = list(['int', 'varchar40', 'float', 'float', 'int', 'varchar20'])
         self.akwaria_optional = list([False, False, False, True, False, False])
 
         self.zwierzeta_db = list(['id_zwierzecia', 'nazwa_zwierzecia', 'data_urodzenia',

@@ -49,11 +49,13 @@ class MainWindowModel:
         correct_types = ColumnNames().get_data_types(table)
         optionals = ColumnNames().get_optionals(table)
         for data in rows:
-            if data == '':
+            if data == '' or data is None:
                 if not optionals[rows.index(data)]:
                     return False
+                else :
+                    continue
             if correct_types[rows.index(data)] == 'int':
-                if not self.is_int(data):
+                if not (type(data) == int or self.is_int(data) or (type(data) == float and data-int(data)==0.00)):
                     return False
                 else:
                     continue
@@ -96,13 +98,23 @@ class MainWindowModel:
                     return False
                 else:
                     continue
+            if correct_types[rows.index(data)] == 'char6':
+                if len(data) != 6:
+                    return False
+                else:
+                    continue
+            if correct_types[rows.index(data)] == 'char64':
+                if len(data) != 64:
+                    return False
+                else:
+                    continue
             if correct_types[rows.index(data)] == 'char1':
                 if len(data) != 1 or not (data == 'M' or data == 'K'):
                     return False
                 else:
                     continue
             if correct_types[rows.index(data)] == 'float':
-                if not (self.is_int(data) or self.is_float(data)):
+                if not (self.is_int(data) or self.is_float(data) or type(data) == float):
                     return False
                 else:
                     continue

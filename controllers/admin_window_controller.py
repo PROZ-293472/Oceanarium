@@ -33,6 +33,8 @@ class AdminWindowController(Controller):
         self.ui.tableView.horizontalHeader().setStretchLastSection(True)
         self.ui.tableView.setModel(self.table_model)
         self.ui.tableView.verticalHeader().setVisible(False)
+        style = "::section {""background-color: pink; }"
+        self.ui.tableView.horizontalHeader().setStyleSheet(style)
 
         # INITIAL STATE OF BUTTONS
         self.ui.pushButton_delete.setDisabled(True)
@@ -54,6 +56,7 @@ class AdminWindowController(Controller):
         #SORT BY COMBO BOX
         self.ui.comboBox_sortBy.addItems(self.table_model.headers)
         self.ui.comboBox_sortBy.currentIndexChanged.connect(self.sort_selection_change)
+
        # self.ui.tableView.resizeColumnsToContents()
 
     def create_list(self, table, cols, order_param):
@@ -77,10 +80,10 @@ class AdminWindowController(Controller):
 
         if self.current_id > 0:
             query = Queries.query_delete_row.format(table= self.current_table, id_name = ColumnNames().get_id_name(self.current_table), id = self.current_id )
-            self.db_connection.query_delete(query=query)
-            self.table_model.deleteData(self.current_row)
-            self.db_connection.commit()
-            self.refresh_table()
+            if self.db_connection.query_delete(query=query):
+                self.table_model.deleteData(self.current_row)
+                self.db_connection.commit()
+                self.refresh_table()
 
 
     def table_clicked(self, item):

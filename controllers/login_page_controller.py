@@ -1,4 +1,7 @@
 from tkinter import messagebox
+
+from PyQt5 import QtWidgets
+
 from controllers.controller import Controller
 from db.queries import Queries
 from entities.entities import Position
@@ -39,7 +42,11 @@ class LoginPageController(Controller):
         response = self.db_connection.send_request(query=Queries.query_login_page,
                                                    params={"id": username, "password": hash_pass})
         if not response:
-            messagebox.showerror(title=None, message='Bledny login lub haslo')
+            message_box = QtWidgets.QMessageBox()
+            message_box.setWindowTitle('Błąd')
+            message_box.setText("Błędny login lub hasło.")
+            message_box.exec()
+            return
         else:
 
             if Position.permissions[response[0][0]] == 'ADMIN':

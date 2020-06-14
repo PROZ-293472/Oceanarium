@@ -41,11 +41,13 @@ class DBConnection:
         cur = self.con.cursor()
         try:
             cur.execute(query)
+            return True
         except cx_Oracle.IntegrityError:
             message_box = QtWidgets.QMessageBox()
             message_box.setWindowTitle('Błąd')
-            message_box.setText("Zajęte ID.")
+            message_box.setText("Naruszone więzy integralności.")
             message_box.exec()
+            return False
 
     def commit(self):
         self.con.commit()

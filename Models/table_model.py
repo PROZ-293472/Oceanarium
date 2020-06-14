@@ -2,6 +2,7 @@ import typing
 
 import PyQt5.QtWidgets
 import PyQt5.QtCore
+from PyQt5 import QtWidgets
 
 from Models.main_model import MainWindowModel
 
@@ -45,7 +46,7 @@ class TableModel(PyQt5.QtCore.QAbstractTableModel):
 
                     if self.header_orientation == PyQt5.QtCore.Qt.Horizontal:
                         if 'data' in column_name or 'Data' in column_name:
-                            if self.rows[index.row()][index.column()] is None :
+                            if self.rows[index.row()][index.column()] is None or self.rows[index.row()][index.column()] =='' :
                                 return ''
                             return self.rows[index.row()][index.column()].strftime('%Y-%m-%d')
                         return self.rows[index.row()][index.column()]
@@ -72,16 +73,25 @@ class TableModel(PyQt5.QtCore.QAbstractTableModel):
 
     def setData(self, index: PyQt5.QtCore.QModelIndex, value: typing.Any, role=PyQt5.QtCore.Qt.EditRole) -> bool:
         if role == PyQt5.QtCore.Qt.EditRole and self.edit_enabled == True:
+
             if self.header_orientation == PyQt5.QtCore.Qt.Vertical :
                 updated_row = value
                 self.rows[index.row()] = updated_row
                 #self.dataChanged.emit(index, index)
             else:
+
                 updated_row = list(self.rows[index.row()])
                 updated_row[index.column()] = value
-                self.rows[index.row()] = tuple(updated_row)
-                self.parent_model.edit_value(self.headers[index.column()], self.rows[index.row()][0], value)
-                self.dataChanged.emit(index, index)
+                if self.parent_model.check_data_types(self.parent_model.current_table, updated_row):
+                    self.rows[index.row()] = tuple(updated_row)
+                    self.parent_model.edit_value(self.headers[index.column()], self.rows[index.row()][0], value)
+                    self.dataChanged.emit(index, index)
+                else :
+                    message_box = QtWidgets.QMessageBox()
+                    message_box.setWindowTitle('Błąd')
+                    message_box.setText("Wprowadzono błędne dane.")
+                    message_box.exec()
+                    return False
             return True
         else:
             return False

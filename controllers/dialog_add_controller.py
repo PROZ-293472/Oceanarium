@@ -68,9 +68,7 @@ class DialogAddController(Controller):
                 current_index = current_index + 1
                 if current_index < additional_id_index:
                     if current_index == ColumnNames().get_column_headers(self.table, ['*']).index(additional_id):
-                        values = values + '\'' + self.table_model.rows[self.table_model.rows.index(ColumnNames().
-                            additional_table_id_name(
-                            table_index))] + '\', '
+                        values = values + '\'' + self.table_model.rows[additional_id_index] + '\', '
                     if v == ' ':
                         return False
                     if v.isnumeric() and len(v) < 10:
