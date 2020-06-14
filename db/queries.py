@@ -13,3 +13,9 @@ class Queries:
                             "INNER JOIN Gatunki g ON z.id_gatunku = g.id_gatunku " \
                             "WHERE o.id_pracownika = :id"
 
+    query_trainer_shows = "SELECT nazwa_pokazu, miejsce, dzien_tygodnia ,godzina_rozpoczecia, godzina_zakonczenia " \
+                          "FROM Realizacje r " \
+                          "INNER JOIN Pokazy p ON r.id_pokazu = p.id_pokazu " \
+                          "INNER JOIN Terminy t ON r.id_terminu = t.id_terminu " \
+                          "WHERE r.id_pracownika = :id"
+

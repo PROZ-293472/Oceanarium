@@ -14,21 +14,21 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_TrainerWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(555, 368)
+        MainWindow.resize(773, 496)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.listView = QtWidgets.QListView(self.centralwidget)
-        self.listView.setGeometry(QtCore.QRect(210, 20, 321, 301))
-        self.listView.setObjectName("listView")
         self.pushButton_personal = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_personal.setGeometry(QtCore.QRect(10, 20, 191, 51))
+        self.pushButton_personal.setGeometry(QtCore.QRect(10, 30, 231, 81))
         self.pushButton_personal.setObjectName("pushButton_personal")
         self.pushButton_animals = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_animals.setGeometry(QtCore.QRect(10, 90, 191, 51))
+        self.pushButton_animals.setGeometry(QtCore.QRect(10, 130, 231, 81))
         self.pushButton_animals.setObjectName("pushButton_animals")
         self.pushButton_shows = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_shows.setGeometry(QtCore.QRect(10, 160, 191, 51))
+        self.pushButton_shows.setGeometry(QtCore.QRect(10, 230, 231, 81))
         self.pushButton_shows.setObjectName("pushButton_shows")
+        self.tableView = QtWidgets.QTableView(self.centralwidget)
+        self.tableView.setGeometry(QtCore.QRect(270, 20, 441, 421))
+        self.tableView.setObjectName("tableView")
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -41,11 +41,3 @@ class Ui_TrainerWindow(object):
         self.pushButton_shows.setText(_translate("MainWindow", "MOJE POKAZY"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

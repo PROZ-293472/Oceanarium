@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from views.admin_window_ui import Ui_AdminWindow
 from views.login_page_ui import Ui_LoginPage
-from views.trainer_window import Ui_TrainerWindow
+from views.trainer_window_ui import Ui_TrainerWindow
 
 
 class Ui_Main(QtWidgets.QWidget):
