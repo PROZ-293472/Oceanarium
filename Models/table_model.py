@@ -12,7 +12,7 @@ class TableModel(PyQt5.QtCore.QAbstractTableModel):
         super(TableModel, self).__init__()
         self.rows = rows
         self.headers = headers
-        self.edit_enabled = False
+        self.edit_enabled = True
         self.parent_model = parent_model
         self.header_orientation = PyQt5.QtCore.Qt.Horizontal
 
@@ -21,6 +21,10 @@ class TableModel(PyQt5.QtCore.QAbstractTableModel):
         self.headers[section] = value
         return True
 
+    def setHeaders (self,new_headers):
+        self.headers = []
+        self.headers = new_headers
+        self.headerDataChanged.emit(self.header_orientation,0,len(self.headers))
     def rowCount(self, parent: PyQt5.QtCore.QModelIndex = ...) -> int:
         return len(self.rows)
 
@@ -38,12 +42,20 @@ class TableModel(PyQt5.QtCore.QAbstractTableModel):
         if (role == PyQt5.QtCore.Qt.DisplayRole):
             for column_name in self.headers:
                 if index.column() == self.headers.index(column_name):
+
                     if self.header_orientation == PyQt5.QtCore.Qt.Horizontal:
+                        if 'data' in column_name or 'Data' in column_name:
+                            if self.rows[index.row()][index.column()] is None :
+                                return ''
+                            return self.rows[index.row()][index.column()].strftime('%Y-%m-%d')
                         return self.rows[index.row()][index.column()]
                     else:
                         return self.rows[index.row()]
         elif role == PyQt5.QtCore.Qt.EditRole:
-            return self.rows[index.row()][index.column()]
+            if self.header_orientation == PyQt5.QtCore.Qt.Horizontal:
+                return self.rows[index.row()][index.column()]
+            else:
+                return self.rows[index.row()]
 
     def headerData(self, section: int, orientation: PyQt5.QtCore.Qt.Orientation = PyQt5.QtCore.Qt.Horizontal,
                    role=PyQt5.QtCore.Qt.DisplayRole) -> typing.Any:

@@ -17,6 +17,7 @@ import Models
 
 class AdminWindowController(Controller):
 
+
     def __init__(self, ui, db_connection):
         super(AdminWindowController, self).__init__(db_connection=db_connection, ui=ui)
 
@@ -24,14 +25,21 @@ class AdminWindowController(Controller):
         self.current_table = 'Pracownicy'
         self.current_id = None
         self.table_model = TableModel(self.main_model)
-        self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko,pesel,id_stanowisko'], 'id_pracownika')
+
+       # self.create_list('Pracownicy', ['id_pracownika,imie,nazwisko,pesel,id_stanowisko,data_urodzenia'], 'id_pracownika')
+        self.create_list('Pracownicy', ['*'],
+                         'id_pracownika')
         self.ui.tableView.setHorizontalHeader(QHeaderView(Qt.Horizontal,self.ui.tableView))
+        self.ui.tableView.horizontalHeader().setStretchLastSection(True)
         self.ui.tableView.setModel(self.table_model)
 
         # INITIAL STATE OF BUTTONS
         self.ui.pushButton_delete.setDisabled(True)
         self.ui.pushButton_edit.setDisabled(True)
-        self.edit_enabled = False
+        self.edit_enabled = True
+       # self.ui.tableView.resizeColumnsToContents()
+        self.ui.tableView.horizontalHeader().setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
+
 
         # CONNECTING FUNCTIONS TO BUTTONS
         self.ui.pushButton_add.clicked.connect(self.add)
@@ -40,23 +48,36 @@ class AdminWindowController(Controller):
         self.ui.pushButton_edit.clicked.connect(self.edit_clicked)
 
 
+        #Table choice combo box
+        self.ui.comboBox_tables.addItems(self.main_model.tables)
+        self.ui.comboBox_tables.currentIndexChanged.connect(self.table_selection_change)
+
+        #SORT BY COMBO BOX
+        self.ui.comboBox_sortBy.addItems(self.table_model.headers)
+        self.ui.comboBox_sortBy.currentIndexChanged.connect(self.sort_selection_change)
+       # self.ui.tableView.resizeColumnsToContents()
+
     def create_list(self, table, cols, order_param):
         query = Queries.query_get_list.format(table=table, cols=cols, param=order_param)
         query = query.translate({ord(i): None for i in "[]'"})
         response = self.db_connection.send_request(query=query)
         print(response)
+        col_names = ColumnNames().get_column_headers(table, cols)
+        self.table_model.setHeaders(col_names)
         self.table_model.rows = response
-        col_names = ColumnNames().get_column_headers(table,cols)
-        self.table_model.headers = col_names
+        self.refresh_table()
 
     def add(self):
         dialog = QtWidgets.QDialog()
-        d = DialogAddController(dialog, 'Pracownicy', self.main_model)
+
+        d = DialogAddController(dialog, self.current_table, self.main_model)
+        self.create_list(self.current_table,['*'],ColumnNames().get_id_name(self.current_table))
 
     def delete(self):
         print("DELETE")
+
         if self.current_id > 0:
-            query = Queries.query_delete_row.format(table= self.current_table, id_name = ColumnNames().pracownicy_db[0], id = self.current_id )
+            query = Queries.query_delete_row.format(table= self.current_table, id_name = ColumnNames().get_id_name(self.current_table), id = self.current_id )
             self.db_connection.query_delete(query=query)
             self.table_model.deleteData(self.current_row)
             self.refresh_table()
@@ -79,6 +100,7 @@ class AdminWindowController(Controller):
     def refresh_table(self):
         self.ui.tableView.setModel(self.table_model)
         self.ui.tableView.viewport().update()
+        print(self.ui.tableView.wordWrap())
 
     def edit_clicked(self):
         self.table_model.edit_enabled = True
@@ -86,6 +108,17 @@ class AdminWindowController(Controller):
     def save_clicked(self):
         self.db_connection.commit()
 
+    def table_selection_change(self,i):
+        self.current_table = self.main_model.tables[i]
+        self.main_model.current_table = self.main_model.tables[i]
+        self.table_model.rows = []
+        self.create_list(self.current_table, ['*'], ColumnNames().get_id_name(self.current_table))
+        self.refresh_sort_selection()
+        self.refresh_table()
 
+    def refresh_sort_selection(self):
+        self.ui.comboBox_sortBy.clear()
+        self.ui.comboBox_sortBy.addItems(self.table_model.headers)
 
-
+    def sort_selection_change(self, i):
+        self.create_list(self.current_table, ['*'], ColumnNames().get_db_column_name(self.current_table,self.table_model.headers[i]))
