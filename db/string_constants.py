@@ -15,7 +15,7 @@ class ColumnNames():
         self.pracownicy_password = 'haslo'
         self.pracownicy_data_types = list(['int', 'varchar20', 'varchar30', 'char11', 'date', 'varchar30',
                                            'int', 'int', 'int','char64'])
-        self.pracownicy_optional = list([False, False, False, True, False, True, False, False, False])
+        self.pracownicy_optional = list([False, False, False, True, True, True, False, False, False])
 
         self.akwaria_db = list(['id_akwarium', 'nazwa_akwarium', 'objectosc', 'temperatura_wody',
                                 'id_oceanarium', 'nazwa_sekcji'])
