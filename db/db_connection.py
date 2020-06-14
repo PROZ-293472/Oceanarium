@@ -1,7 +1,6 @@
 import json
 import cx_Oracle
 
-
 # requires config.txt file in db folder
 from PyQt5 import QtWidgets
 
@@ -17,7 +16,6 @@ class DBConnection:
                 name = data['name']
         cred = f'{username}/{password}@{address}/{name}'
         self.con = cx_Oracle.connect(cred)
-
 
     def __del__(self):
         self.con.close()
@@ -38,10 +36,10 @@ class DBConnection:
         cur.close()
 
         return response
-    
-    def query_delete(self,query):
+
+    def query_delete(self, query):
         cur = self.con.cursor()
-        try :
+        try:
             cur.execute(query)
         except cx_Oracle.IntegrityError:
             message_box = QtWidgets.QMessageBox()
@@ -49,12 +47,5 @@ class DBConnection:
             message_box.setText("Zajęte ID.")
             message_box.exec()
 
-
     def commit(self):
         self.con.commit()
-
-
-
-
-
-

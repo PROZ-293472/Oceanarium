@@ -32,6 +32,7 @@ class AdminWindowController(Controller):
         self.ui.tableView.setHorizontalHeader(QHeaderView(Qt.Horizontal,self.ui.tableView))
         self.ui.tableView.horizontalHeader().setStretchLastSection(True)
         self.ui.tableView.setModel(self.table_model)
+        self.ui.tableView.verticalHeader().setVisible(False)
 
         # INITIAL STATE OF BUTTONS
         self.ui.pushButton_delete.setDisabled(True)
@@ -80,6 +81,7 @@ class AdminWindowController(Controller):
             query = Queries.query_delete_row.format(table= self.current_table, id_name = ColumnNames().get_id_name(self.current_table), id = self.current_id )
             self.db_connection.query_delete(query=query)
             self.table_model.deleteData(self.current_row)
+            self.db_connection.commit()
             self.refresh_table()
 
 
