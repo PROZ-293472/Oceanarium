@@ -8,11 +8,11 @@ from Models.main_model import MainWindowModel
 
 class TableModel(PyQt5.QtCore.QAbstractTableModel):
 
-    def __init__(self, parent_model, rows=[], headers=[]):
+    def __init__(self, parent_model, rows=[], headers=[], edit_enabled=True):
         super(TableModel, self).__init__()
         self.rows = rows
         self.headers = headers
-        self.edit_enabled = True
+        self.edit_enabled = edit_enabled
         self.parent_model = parent_model
         self.header_orientation = PyQt5.QtCore.Qt.Horizontal
 

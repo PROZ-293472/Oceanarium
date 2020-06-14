@@ -36,7 +36,6 @@ class AdminWindowController(Controller):
 
         # INITIAL STATE OF BUTTONS
         self.ui.pushButton_delete.setDisabled(True)
-        self.ui.pushButton_edit.setDisabled(True)
         self.edit_enabled = True
        # self.ui.tableView.resizeColumnsToContents()
         self.ui.tableView.horizontalHeader().setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContents)
@@ -46,7 +45,6 @@ class AdminWindowController(Controller):
         self.ui.pushButton_add.clicked.connect(self.add)
         self.ui.pushButton_delete.clicked.connect(self.delete)
         self.ui.tableView.clicked.connect(self.table_clicked)
-        self.ui.pushButton_edit.clicked.connect(self.edit_clicked)
 
 
         #Table choice combo box
@@ -87,11 +85,9 @@ class AdminWindowController(Controller):
 
     def table_clicked(self, item):
         if not item:
-            self.ui.pushButton_edit.setDisabled(True)
             self.ui.pushButton_delete.setDisabled(True)
             return
 
-        self.ui.pushButton_edit.setEnabled(True)
         self.ui.pushButton_delete.setEnabled(True)
 
         row = item.row()

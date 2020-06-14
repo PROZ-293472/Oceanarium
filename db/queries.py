@@ -6,3 +6,16 @@ class Queries:
     query_edit_value = "UPDATE {table} SET {column_name} = '{new_value}' WHERE {id_name} = {id}"
     query_add_row = "INSERT INTO {table} VALUES ({values})"
 
+    query_trainer_personal = "SELECT imie,nazwisko, PESEL, data_urodzenia, nr_licencji FROM Pracownicy " \
+                             "WHERE id_pracownika = :id"
+    query_trainer_animals = "SELECT nazwa_zwierzecia, plec, id_akwarium, nazwa_gatunku FROM Opieka o " \
+                            "INNER JOIN Zwierzeta z ON o.id_zwierzecia = z.id_zwierzecia " \
+                            "INNER JOIN Gatunki g ON z.id_gatunku = g.id_gatunku " \
+                            "WHERE o.id_pracownika = :id"
+
+    query_trainer_shows = "SELECT nazwa_pokazu, miejsce, dzien_tygodnia ,godzina_rozpoczecia, godzina_zakonczenia " \
+                          "FROM Realizacje r " \
+                          "INNER JOIN Pokazy p ON r.id_pokazu = p.id_pokazu " \
+                          "INNER JOIN Terminy t ON r.id_terminu = t.id_terminu " \
+                          "WHERE r.id_pracownika = :id"
+
