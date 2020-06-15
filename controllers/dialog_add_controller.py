@@ -79,12 +79,12 @@ class DialogAddController(Controller):
                     if current_index == ColumnNames().get_column_headers(self.table, ['*']).index(additional_id):
                         values = values + '\'' + self.table_model.rows[additional_id_index] + '\', '
                     if current_index == additional_id_index:
-                        print('Nastepny:'+ self.table_model.rows[self.table_model.rows.index(v) + 1])
+                        print('Nastepny:'+ self.table_model.rows[current_index + 1])
                         if self.window_model.additional_exists(
                                 ColumnNames().additional_tables[table_index],
                                 int(v), ColumnNames().additional_table_id_name(table_index)) and \
-                                (self.table_model.rows[self.table_model.rows.index(v) + 1] == '' or
-                                 self.table_model.rows[self.table_model.rows.index(v) + 1] is None):
+                                (self.table_model.rows[current_index + 1] == '' or
+                                 self.table_model.rows[current_index + 1] is None):
                             self.window_model.add_row(self.table, values[0:len(values) - 2])
                             return
                         else:
